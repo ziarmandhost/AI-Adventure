@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../styles/fonts.css">
+  <link rel="stylesheet" href="../styles/reset.css">
+  <link rel="stylesheet" href="../styles/pages/register.css">
+  <link rel="stylesheet" href="../styles/libs/font-awesome/icons.css">
+
+  <title>AI-Adventure</title>
+</head>
+<body>
+  <div id="register_form">
+    <h2>SignIn</h2>
+    <div>
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required>
+    </div>
+    <div>
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required>
+    </div>
+    <div>
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required>
+    </div>
+    <div id="subsub">
+      <button id="submit" type="button">Submit</button>
+    </div>
+  </div>
+
+  <button onclick="window.API.invoke('change-screen', 'menu')" id="goback">Back</button>
+
+  <script src="../scripts/register.js"></script>
+</body>
+</html>

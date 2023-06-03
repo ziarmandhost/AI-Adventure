@@ -1,0 +1,43 @@
+{
+  "name": "ai-adventures",
+  "version": "1.0.0",
+  "description": "ChatGPT Novel",
+  "main": "./dist/src/index.js",
+  "scripts": {
+    "start": "npm run build && electron .",
+    "copy-files": "copyfiles --exclude \"**/*.ts\" src/**/* dist/",
+    "build": "npm run copy-files && tsc",
+    "watch": "tsc -w",
+    "lint": "eslint -c .eslintrc --ext .ts ./src"
+  },
+  "devDependencies": {
+    "@types/body-parser": "^1.19.2",
+    "@types/express": "^4.17.17",
+    "@types/jsonwebtoken": "^9.0.2",
+    "@types/lokijs": "^1.5.8",
+    "@types/node": "^18.16.3",
+    "copyfiles": "^2.4.1",
+    "nodemon": "^2.0.22",
+    "@typescript-eslint/eslint-plugin": "^5.59.8",
+    "@typescript-eslint/parser": "^5.59.8",
+    "@vercel/webpack-asset-relocator-loader": "^1.7.3",
+    "css-loader": "^6.8.1",
+    "electron": "25.0.1",
+    "eslint": "^8.41.0",
+    "eslint-plugin-import": "^2.27.5",
+    "fork-ts-checker-webpack-plugin": "^7.3.0",
+    "node-loader": "^2.0.0",
+    "style-loader": "^3.3.3",
+    "ts-loader": "^9.4.3",
+    "ts-node": "^10.9.1",
+    "typescript": "~4.5.4"
+  },
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.0",
+    "lokijs": "^1.5.12",
+    "node-fetch": "^3.3.1"
+  }
+}

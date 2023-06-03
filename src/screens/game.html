@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../styles/fonts.css">
+  <link rel="stylesheet" href="../styles/reset.css">
+  <link rel="stylesheet" href="../styles/pages/game.css">
+  <link rel="stylesheet" href="../styles/libs/font-awesome/icons.css">
+
+  <title>AI-Adventure</title>
+</head>
+<body>
+  <div id="wrapper">
+    <div id="illustration">
+      <img src="../assets/images/loading.svg" alt="Story illustration">
+    </div>
+
+    <div id="paragraph"></div>
+
+    <div id="answers_buttons">
+      <button id="A"> </button>
+      <button id="B"> </button>
+      <button id="C"> </button>
+    </div>
+
+    <div id="settings_button">
+      <a href="#" onclick="window.API.invoke('change-screen', 'menu')">
+        <i class="fa-solid fa-right-from-bracket"></i>
+      </a>
+    </div>
+
+    <button id="clean_story_button">
+      <i class="fa-solid fa-feather"></i> Rewrite story
+    </button>
+  </div>
+
+  <script type="module" src="../scripts/game.js"></script>
+</body>
+</html>
