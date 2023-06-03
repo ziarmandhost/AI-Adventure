@@ -1,4 +1,4 @@
-# ChatGPTNovel
+# AI-Adventures
 Codebase for text novel game built using AI.
 
 ## Getting Started
@@ -11,27 +11,38 @@ Codebase for text novel game built using AI.
 
 ### Dependencies
 
-- turbo@1.9.3
-- express@4.18.2
-- electron@22.2.0
+- npm@9.5.1
+- nodejs@19.8.1
+- electron@25.0.1
 
 ### Project structure
-- `apps`
-  - `game` - contains all codebase for desktop novel game
-  - `server` - contains all codebase for backend side 
-- `packages` 
-  - `logger` - custom self-made library for logging messages in .txt file
-  - `ai` - custom self-made library for making request to ChatGPT using official API
-  - `in-memory-db` - custom self-made abstraction on top of lokijs db
 - `docs` - code documentation folder
-- `.eslintrc` - global project lint settings
-- `pnpm-workspace.yaml` - monorepo workspace config
-- `turbo.json` - monorepo config
-- `README.md`
+- `src`
+  - `assets` - contains images/fonts/queries and other media
+  - `backend` - contains all "backend" code 
+    - `modules` 
+      - `AI.ts` - custom self-made library for making request to ChatGPT using official API
+      - `Database.ts` - custom self-made abstraction on top of lokijs db
+    - `auth.ts` - handlers of the auth events (register/login)
+    - `story.ts` - handlers of the story events (new-story/continue-story/reset-story)
+  - `screens` - contains all html files, representing screens of application
+  - `scripts` - scripts attached to corresponding screen
+  - `styles` - all css styles
+    - `libs`
+    - `pages`
+    - `fonts.css` - all font definitions
+    - `reset.css` - reset some browser predefined styles
+  - `utils` - helper functions
+  - `index.ts` - application entry point
+  - `preload.ts` - bridge between backend and client (internal "API")
 
 ### Running locally
-In the project root folder:
+Download project, enter root folder in terminal and run commands:
 ```
-pnpm install
-pnpm run start
+npm install
+```
+
+To run app locally:
+```
+npm run start
 ```
