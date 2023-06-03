@@ -41,6 +41,11 @@ Download project, enter root folder in terminal and run commands:
 ```
 npm install
 ```
+Then create `.env` file in the root folder. Put here 2 values:
+```dotenv
+CHAT_GPT_API_KEY="OPEN_AI_API_KEY"
+JWT_SECRET="YOUR_JWT_SECRET_VALUE"
+```
 
 To run app locally:
 ```
