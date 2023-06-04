@@ -5,11 +5,10 @@ import * as path from "path"
 import Database from "./backend/modules/Database"
 import AI from "./backend/modules/AI"
 import {login, register} from "./backend/auth"
-import {continueStory, resetStory, startNewStory, StoryResponse} from "./backend/story"
+import {continueStory, resetStory, startNewStory} from "./backend/story"
 
 // Utils
 import env from "./utils/env"
-import {DefaultResponse} from "./utils/secure-route"
 
 const createWindow = async () => {
   const win = new BrowserWindow({
@@ -18,6 +17,8 @@ const createWindow = async () => {
     autoHideMenuBar: true,
     center: true,
     show: false,
+    focusable: true,
+    alwaysOnTop: true,
     webPreferences: {
       contextIsolation: true,
       nodeIntegration: false,
@@ -25,7 +26,7 @@ const createWindow = async () => {
     }
   })
 
-  await win.loadURL(path.join(__dirname, "./screens/menu.html"))
+  await win.loadFile(path.join(__dirname, "./screens/menu.html"))
 
   return win
 }
@@ -44,8 +45,15 @@ app.whenReady().then(async () => {
   Database.load("./app_data.json").then(() => AI.setToken(env.CHAT_GPT_API_KEY))
 })
 
-ipcMain.handle("change-screen", async (_, page) => {
-  await win.loadURL(path.join(__dirname, `../src/screens/${page}.html`))
+ipcMain.on("change-screen", async (_, page) => {
+  const window = BrowserWindow.getFocusedWindow()
+
+  if (window) {
+    window.loadFile(path.join(__dirname, `../src/screens/${page}.html`)).then(() => {
+      window.hide()
+      window.show()
+    })
+  }
 })
 
 ipcMain.handle("register", (_, data) => register(data))

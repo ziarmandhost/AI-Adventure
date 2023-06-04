@@ -4,6 +4,7 @@ declare global {
   interface Window {
     API: {
       invoke: (eventName: string, data ?: any) => Promise<any>
+      send: (eventName: string, data ?: any) => void
     }
   }
 }
@@ -11,6 +12,10 @@ declare global {
 const API = {
   async invoke (eventName: string, data: any) {
     return await ipcRenderer.invoke(eventName, data)
+  },
+
+  send(eventName: string, data: any) {
+    ipcRenderer.send(eventName, data)
   }
 }
 

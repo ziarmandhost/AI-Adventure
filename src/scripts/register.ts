@@ -13,7 +13,7 @@ window.addEventListener("load", () => {
     }
     else {
       alert("Success! Be ready to login!")
-      await window.API.invoke("change-screen", "login")
+      await window.API.send("change-screen", "login")
     }
   })
 })

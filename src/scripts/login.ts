@@ -12,7 +12,7 @@ window.addEventListener("load", () => {
       localStorage.setItem("isNewUser", res?.data?.isNewUser)
       localStorage.setItem("lastMessage", res?.data?.lastMessage)
       alert(`Welcome back, ${res?.data?.username}, to our game!`)
-      await window.API.invoke("change-screen", "game")
+      window.API.send("change-screen", "game")
     }
     else {
       alert(res?.message)
