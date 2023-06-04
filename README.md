@@ -51,3 +51,8 @@ To run app locally:
 ```
 npm run start
 ```
+
+To run build app locally to .exe file:
+```
+npm run package
+```
