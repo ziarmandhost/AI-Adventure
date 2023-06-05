@@ -1,0 +1,31 @@
+#team .team-members {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+#team .team-member {
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#team .team-member img {
+    width: 6.25rem;
+    height: 6.25rem;
+    object-fit: contain;
+    margin-bottom: 10px;
+}
+
+#team .team-member h3 {
+    font-size: 2rem;
+    color: var(--primary-color);
+}
+
+#team .team-member p {
+    font-size: 14px;
+    color: var(--secondary-color);
+}

@@ -1,0 +1,42 @@
+:root {
+    --primary-color: #741b81;
+    --secondary-color: white;
+
+    --accent-color: #cc49e0;
+}
+
+@font-face {
+    font-family: "MenuFont";
+    src: url("../assets/fonts/orange_juice.ttf");
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+    font-family: Arial;
+}
+
+a {
+    text-decoration: none;
+}
+
+ul, li {
+    list-style-type: none;
+}
+
+section {
+    background: #1a1a1d;
+    color: var(--secondary-color);
+
+    padding: 2.5rem;
+}
+
+section>h2 {
+    font-weight: 100;
+    color: white;
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    font-family: "MenuFont";
+}

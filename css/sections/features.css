@@ -1,0 +1,19 @@
+#features > h2 {
+    text-align: center;
+}
+
+#features .feature-list {
+    text-align: center;
+}
+
+#features .feature-list li {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+#features .feature-list li::before {
+    content: attr(data-highlight) ":";
+    margin-right: 5px;
+    font-weight: bold;
+    color: var(--accent-color);
+}
