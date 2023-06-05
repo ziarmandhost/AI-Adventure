@@ -30,8 +30,11 @@ const getTextBetween = (content: string, start: string, end: string) => {
 
 export function parsePromptResponse(text: string): PromptParsedData {
   const situation = getTextBetween(text, "Current situation:", "Current environment:")
+    .replace("Current situation:", "")
   const environment = getTextBetween(text, "Current environment:", "Current main goal of character:")
+    .replace("Current environment:", "")
   const goal = getTextBetween(text, "Current main goal of character:", "A\\)")
+    .replace("Current main goal of character:", "")
 
   const A = getTextBetween(text, "A\\)", "B\\)")
   const B = getTextBetween(text, "B\\)", "C\\)")

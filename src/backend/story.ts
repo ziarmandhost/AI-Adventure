@@ -71,11 +71,16 @@ export const continueStory = ({token, answer}: {token: string, answer: string}):
         const template = fs.readFileSync(queryPath, {encoding: "utf8", flag: "r"})
 
         const userMessages = Database.getUserStoryMessages(email)
-        const lastAssistantAnswer = userMessages.at(-1)?.content ?? ""
+        if (userMessages.length === 0) {
+          console.log(JSON.stringify(userMessages))
+          return {data: {message: "Can't get previous story!"}, code: 500}
+        }
+
+        const lastMessage = userMessages.at(-1) as MessageType
 
         const continueQuery = buildContinueQueryFromTemplate({
           template,
-          lastAssistantAnswer,
+          lastAssistantAnswer: lastMessage?.content ?? "",
           userAnswer: answer
         })
 
@@ -86,7 +91,7 @@ export const continueStory = ({token, answer}: {token: string, answer: string}):
           }
         ]
 
-        const mappedMessages = [...userMessages, ...messages].map(el => ({role: el.role, content: el.content}))
+        const mappedMessages = [lastMessage, ...messages].map(el => ({role: el.role, content: el.content}))
 
         const promptResponseText = await AI.getCompletion(mappedMessages)
         const result = parsePromptResponse(promptResponseText)

@@ -18,7 +18,6 @@ const createWindow = async () => {
     center: true,
     show: false,
     focusable: true,
-    alwaysOnTop: true,
     webPreferences: {
       contextIsolation: true,
       nodeIntegration: false,
