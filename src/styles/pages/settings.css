@@ -24,7 +24,9 @@
     padding: 2.5rem;
     border-radius: 1.5rem;
 
-    max-width: 60%;
+    max-width: 70%;
+    min-width: 50%;
+    min-height: 70%;
 }
 
 #wrapper>div>h1 {
@@ -32,15 +34,37 @@
     font-weight: 100;
     font-size: 4rem;
     text-align: center;
-    margin-top: 0;
+    margin-bottom: 20px;
 }
 
-#wrapper>div>p {
+#wrapper>div button {
+    padding: 15px 50px;
+}
+#wrapper>div button:not(:last-child) {
+    margin-right: 15px;
+}
+
+#wrapper>div>.content {
+    width: 100%;
+    height: 100%;
+
     font-size: 1.5rem;
     font-family: Arial;
-    margin: 20px auto;
 }
 
-#wrapper>div>button {
-    padding: 15px 50px;
+#wrapper>div>.content>select {
+    color: white;
+    background: transparent;
+    font-size: 1.5rem;
+    font-family: Arial;
+    width: 10rem;
+    min-width: 200px;
+}
+
+#wrapper>div>.content>select>option {
+    color: black;
+}
+
+#wrapper>div>.buttons {
+    display: flex;
 }

@@ -7,6 +7,7 @@ import buildContinueQueryFromTemplate from "../utils/build-continue-query"
 
 import AI from "./modules/AI"
 import Database, {MessageType} from "./modules/Database"
+import translate from "../utils/translate"
 
 export type StoryResponse = Promise<{
   data: (
@@ -40,8 +41,10 @@ export const startNewStory = (token: string): StoryResponse => {
           }
         ]
 
+        const {language} = Database.getSettings()
         const promptResponseText = await AI.getCompletion(messages)
-        const result = parsePromptResponse(promptResponseText)
+        const parsedPrompt = parsePromptResponse(promptResponseText)
+        const result = await translate(parsedPrompt, language)
         const image = await AI.generateImage(result.environment)
 
         messages.push({
@@ -93,8 +96,10 @@ export const continueStory = ({token, answer}: {token: string, answer: string}):
 
         const mappedMessages = [lastMessage, ...messages].map(el => ({role: el.role, content: el.content}))
 
+        const {language} = Database.getSettings()
         const promptResponseText = await AI.getCompletion(mappedMessages)
-        const result = parsePromptResponse(promptResponseText)
+        const parsedPrompt = parsePromptResponse(promptResponseText)
+        const result = await translate(parsedPrompt, language)
         const image = await AI.generateImage(result.environment)
 
         messages.push({

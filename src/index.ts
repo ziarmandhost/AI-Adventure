@@ -6,6 +6,7 @@ import Database from "./backend/modules/Database"
 import AI from "./backend/modules/AI"
 import {login, register} from "./backend/auth"
 import {continueStory, resetStory, startNewStory} from "./backend/story"
+import {getSettings, updateSettings} from "./backend/settings"
 
 // Utils
 import env from "./utils/env"
@@ -41,19 +42,23 @@ app.whenReady().then(async () => {
   })
 
   // Setup Database
-  Database.load("./app_data.json").then(() => AI.setToken(env.CHAT_GPT_API_KEY))
+  Database.load("./app_data.json")
+    .then(() => AI.setToken(env.CHAT_GPT_API_KEY))
+    .then(() => Database.createDefaultSettings())
 })
 
-ipcMain.on("change-screen", async (_, page) => {
+ipcMain.on("change-screen", async (_, page, params) => {
   const window = BrowserWindow.getFocusedWindow()
 
   if (window) {
-    window.loadFile(path.join(__dirname, `../src/screens/${page}.html`)).then(() => {
-      window.hide()
-      window.show()
-    })
+    window.hide()
+
+    const queryParams = params ? `?${params}` : ""
+    window.loadFile(path.join(__dirname, `../src/screens/${page}.html${queryParams}`)).then(() => window.show())
   }
 })
+
+ipcMain.on("quit", async () => app.quit())
 
 ipcMain.handle("register", (_, data) => register(data))
 ipcMain.handle("login", (_, data) => login(data))
@@ -61,6 +66,9 @@ ipcMain.handle("login", (_, data) => login(data))
 ipcMain.handle("new-story", async (_, data) => await startNewStory(data))
 ipcMain.handle("continue-story", async (_, data) => await continueStory(data))
 ipcMain.handle("reset-story", async (_, data) => await resetStory(data))
+
+ipcMain.handle("get-settings", () => getSettings())
+ipcMain.handle("set-settings", (_, data) => updateSettings(data))
 
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") app.quit()

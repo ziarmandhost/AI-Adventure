@@ -1,4 +1,4 @@
-type PromptParsedData = {
+export type PromptParsedData = {
   situation: string
   environment: string
   goal: string
@@ -44,6 +44,10 @@ export function parsePromptResponse(text: string): PromptParsedData {
     situation,
     environment,
     goal,
-    variants: {A, B, C}
+    variants: {
+      A,
+      B,
+      C,
+    }
   }
 }
