@@ -67,7 +67,7 @@ export default class AI {
         size: "512x512",
         response_format: "b64_json"
       })
-    });
+    })
 
     const jsonData = (await response.json()) as OpenAIImageResponse
     console.log("image", jsonData)

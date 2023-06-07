@@ -1,5 +1,4 @@
 import loki from "lokijs"
-import {Locale} from "free-translate/dist/types/locales"
 
 export type MessageType = {
   role: string
@@ -18,7 +17,7 @@ export type User = {
 
 export type SettingsType = {
   identity: string
-  language: keyof Locale
+  language: string
 }
 
 export default class InMemoryDb {

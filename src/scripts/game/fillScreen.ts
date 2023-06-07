@@ -27,20 +27,20 @@ const fillScreen = (
   }
 
   // Set story text
-  const storyParagraphLoader = document.querySelector("#wrapper>div:nth-child(1)>.text>.loader") as HTMLImageElement
+  const storyParagraphLoaders = Array.from(document.querySelectorAll("#paragraph>div>.loader")) as HTMLImageElement[]
   const situationParagraph = document.querySelector("#paragraph>div:nth-child(1)>p") as HTMLElement
   const environmentParagraph = document.querySelector("#paragraph>div:nth-child(2)>p") as HTMLElement
   const goalParagraph = document.querySelector("#paragraph>div:nth-child(3)>p") as HTMLElement
 
   if (situation !== "" && environment !== "" && goal !== "") {
-    storyParagraphLoader.style.display = "none"
+    storyParagraphLoaders.forEach(loader => loader.style.display = "none")
 
     situationParagraph.innerText = situation
     environmentParagraph.innerText = environment
     goalParagraph.innerText = goal
   }
   else {
-    storyParagraphLoader.style.display = "flex"
+    storyParagraphLoaders.forEach(loader => loader.style.display = "flex")
   }
 
   const buttons = Array.from(document.querySelectorAll("#wrapper>div:nth-child(2)>.answers>button")) as HTMLButtonElement[]

@@ -1,12 +1,25 @@
-import {translate as freeTranslate} from "free-translate"
-import {Locale} from "free-translate/dist/types/locales"
 import {PromptParsedData} from "./prompt-parser"
+import freeTranslate from "google-translate-api-x"
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-const translateText = async (text: string, lang: keyof Locale) => await freeTranslate(text, {from: "en", to: lang})
+const translateText = async (text: string, lang: string): Promise<string> => {
+  try {
+    return (
+      await freeTranslate(text, {
+        to: lang,
+        forceBatch: false,
+        rejectOnPartialFail: false
+      })
+    ).text
+  }
+  catch (e) {
+    console.log("Problems in translate: ", e)
+    return await translateText(text, lang)
+  }
+}
 
-const translate = async (parsedPrompt: PromptParsedData, lang: keyof Locale) => {
+const translate = async (parsedPrompt: PromptParsedData, lang: string) => {
+  if (lang === "en") return parsedPrompt
+
   return {
     situation: await translateText(parsedPrompt.situation, lang),
     environment: await translateText(parsedPrompt.environment, lang),
