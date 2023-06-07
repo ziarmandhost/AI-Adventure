@@ -41,6 +41,9 @@ const fillScreen = (
   }
   else {
     storyParagraphLoaders.forEach(loader => loader.style.display = "flex")
+    situationParagraph.innerText = ""
+    environmentParagraph.innerText = ""
+    goalParagraph.innerText = ""
   }
 
   const buttons = Array.from(document.querySelectorAll("#wrapper>div:nth-child(2)>.answers>button")) as HTMLButtonElement[]
