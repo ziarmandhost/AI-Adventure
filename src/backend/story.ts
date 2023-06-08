@@ -27,7 +27,7 @@ export type StoryResponse = Promise<{
 }>
 
 export const startNewStory = async (profile: string): StoryResponse => {
-  // try {
+  try {
     const queryPath = path.join(__dirname, "../assets/queries", "start.txt")
     const startQuery = fs.readFileSync(queryPath, {encoding: "utf8", flag: "r"})
 
@@ -55,15 +55,17 @@ export const startNewStory = async (profile: string): StoryResponse => {
 
     Database.addStoryMessages(profile, messages)
     return {data: {...result, image}, code: 200}
-  // }
-  // catch (error: any) {
-  //   console.log("Error in new story", error?.message)
-  //   return {data: {message: error?.message ?? ""}, code: 500}
-  // }
+  }
+  catch (error: any) {
+    console.log("Error in new story", error?.message)
+
+    return startNewStory(profile)
+    // return {data: {message: error?.message ?? ""}, code: 500}
+  }
 }
 
 export const continueStory = async ({profile, answer}: { profile: string, answer: string }): StoryResponse => {
-  // try {
+  try {
     const queryPath = path.join(__dirname, "../assets/queries", "continue.txt")
     const template = fs.readFileSync(queryPath, {encoding: "utf8", flag: "r"})
 
@@ -107,11 +109,13 @@ export const continueStory = async ({profile, answer}: { profile: string, answer
 
     Database.addStoryMessages(profile, messages)
     return {data: {...result, image}, code: 200}
-  // }
-  // catch (error: any) {
-  //   console.log("Error in continue story", error?.message)
-  //   return {data: {message: error?.message ?? ""}, code: 500}
-  // }
+  }
+  catch (error: any) {
+    console.log("Error in continue story", error?.message)
+
+    return continueStory({profile, answer})
+    // return {data: {message: error?.message ?? ""}, code: 500}
+  }
 }
 
 export const resetStory = async (profile: string): Promise<{ message: string, code: number }> => {

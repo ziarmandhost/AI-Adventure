@@ -14,11 +14,11 @@
     height: 100%;
 }
 .loader>img {
-    width: 25%;
-    height: 25%;
+    width: 15%;
+    height: 15%;
 
-    min-width: 6.25rem;
-    min-height: 6.25rem;
+    min-width: 4.25rem;
+    min-height: 4.25rem;
 
     user-select: none;
 }
@@ -54,7 +54,7 @@
     text-align: center;
 }
 
-#wrapper>div:nth-child(1)>.control #to-menu {
+#wrapper>div:nth-child(1)>.control #to-menu, #wrapper>div:nth-child(1)>.control #fix {
     width: 64px;
     height: 64px;
     line-height: 60px;
