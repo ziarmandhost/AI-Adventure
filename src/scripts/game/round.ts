@@ -17,13 +17,13 @@ type StoryResponse = {
 }
 
 const nextRound = async (answer = ""): Promise<void> => {
-  const token = localStorage.getItem("token")
+  const profile = localStorage.getItem("profile")
   setLoading()
 
   const res = (
     answer === ""
-    ? await window.API.invoke("new-story", token)
-    : await window.API.invoke("continue-story", {token, answer})
+    ? await window.API.invoke("new-story", profile)
+    : await window.API.invoke("continue-story", {profile, answer})
   ) as StoryResponse
 
   console.log("res", res)

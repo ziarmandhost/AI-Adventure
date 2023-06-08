@@ -1,10 +1,12 @@
 module.exports = {
-  packagerConfig: {},
+  packagerConfig: {
+    icon: "./src/assets/images/logo"
+  },
   rebuildConfig: {},
   makers: [
     {
       name: '@electron-forge/maker-squirrel',
-      config: {},
+      config: {}
     },
     {
       name: '@electron-forge/maker-zip',
@@ -12,11 +14,11 @@ module.exports = {
     },
     {
       name: '@electron-forge/maker-deb',
-      config: {},
+      config: {}
     },
     {
       name: '@electron-forge/maker-rpm',
-      config: {},
+      config: {}
     },
   ],
 };

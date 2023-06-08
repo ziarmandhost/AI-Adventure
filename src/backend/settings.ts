@@ -1,5 +1,6 @@
 import Database, {SettingsType} from "./modules/Database"
-import {DefaultResponse} from "../utils/secure-route"
+
+type DefaultResponse = { message?: string, data?: any, code: number }
 
 export const updateSettings = (settings: SettingsType): DefaultResponse => {
   try {
