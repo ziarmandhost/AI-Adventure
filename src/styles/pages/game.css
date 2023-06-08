@@ -125,7 +125,10 @@
 }
 #wrapper>div:nth-child(2)>.answers>button {
     width: 100%;
-    height: calc(100% / 3);
+    height: calc((100% - 30px) / 3);
     overflow-y: auto;
     padding: 15px 20px;
+}
+#wrapper>div:nth-child(2)>.answers>button:not(:last-child) {
+    margin-bottom: 15px;
 }

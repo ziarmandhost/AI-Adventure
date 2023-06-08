@@ -8,16 +8,22 @@ export type MessageType = {
   parsedMessage?: string
 }
 
-export type User = {
-  username: string
-  email: string
-  password: string
+export type Profile = {
+  id: string
   storyLine: MessageType[]
 }
 
 export type SettingsType = {
   identity: string
   language: string
+}
+
+export type ProfilesResponse = {
+  [id: string]: {
+    status: string
+    isNewUser: string
+    lastMessage: string | undefined
+  }
 }
 
 export default class InMemoryDb {
@@ -38,8 +44,8 @@ export default class InMemoryDb {
   }
 
   private static initialize() {
-    if (!this.instance.getCollection("users")) {
-      this.instance.addCollection("users", {indices: "email"})
+    if (!this.instance.getCollection("profiles")) {
+      this.instance.addCollection("profiles", {indices: "email"})
     }
 
     if (!this.instance.getCollection("app-settings")) {
@@ -47,56 +53,38 @@ export default class InMemoryDb {
     }
   }
 
+  // DEFAULT
   public static createDefaultSettings () {
     const appSettings = this.instance.getCollection("app-settings")
+    const settings = appSettings.findOne()
 
-    appSettings.insert({
-      identity: "settings",
-      language: "en"
-    })
-    this.instance.saveDatabase()
-  }
-
-  public static createUser(userData: User): void {
-    const users = this.instance.getCollection("users")
-    const result = users.by("email", userData.email)
-
-    if (!result) {
-      users.insert(userData)
+    if (settings === null) {
+      appSettings.insert({
+        identity: "settings",
+        language: "en"
+      })
       this.instance.saveDatabase()
-    } else throw new Error("Duplicated user!")
+    }
   }
 
-  public static getUserInfo(email: string): User {
-    const users = this.instance.getCollection("users")
-    const result = users.by("email", email)
-    if (!result) throw new Error("Can't get-story.ts user!")
+  public static createProfiles () {
+    const profiles = this.instance.getCollection("profiles")
 
-    return result
-  }
+    for (let i = 0; i < 4; i++) {
+      const profile = profiles.findOne({id: `profile_${i + 1}`})
 
-  public static addStoryMessages(email: string, stories: MessageType[]): void {
-    const users = this.instance.getCollection("users")
-    const user = users.findOne({email})
-    user.storyLine = [...user.storyLine, ...stories]
-    users.update(user)
+      if (profile === null) {
+        profiles.insert({
+          id: `profile_${i + 1}`,
+          storyLine: []
+        })
+      }
+    }
+
     this.instance.saveDatabase()
   }
 
-  public static getUserStoryMessages(email: string): MessageType[] {
-    const users = this.instance.getCollection("users")
-    const user = users.findOne({email})
-    return user.storyLine
-  }
-
-  public static resetStory(email: string): void {
-    const users = this.instance.getCollection("users")
-    const user = users.findOne({email})
-    user.storyLine = []
-    users.update(user)
-    this.instance.saveDatabase()
-  }
-
+  // SETTINGS
   public static getSettings(): SettingsType {
     const appSettings = this.instance.getCollection("app-settings")
     return appSettings.findOne()
@@ -114,4 +102,52 @@ export default class InMemoryDb {
     this.instance.saveDatabase()
   }
 
+  // PROFILES
+  public static getProfiles(): ProfilesResponse {
+    const profiles = this.instance.getCollection("profiles").data as Profile[]
+
+    const profilesResponse: ProfilesResponse = {}
+    for (const profileKey in profiles) {
+      const profile = profiles[profileKey]
+
+      profilesResponse[profile.id] = {
+        status: profile.storyLine.length > 0 ? "continue" : "start new story",
+        isNewUser: profile.storyLine.length > 0 ? "false": "true",
+        lastMessage: profile.storyLine.at(-1)?.parsedMessage
+      }
+    }
+
+    return profilesResponse
+  }
+
+  // STORY
+  public static addStoryMessages(id: string, stories: MessageType[]): void {
+    const profiles = this.instance.getCollection("profiles")
+    const profile = profiles.findOne({id: `profile_${id}`})
+
+    console.log(`profile ${id}(addStoryMessages)`, profile)
+
+    profile.storyLine = [...profile.storyLine, ...stories]
+    profiles.update(profile)
+    this.instance.saveDatabase()
+  }
+
+  public static getUserStoryMessages(id: string): MessageType[] {
+    const profiles = this.instance.getCollection("profiles")
+    const profile = profiles.findOne({id: `profile_${id}`})
+    console.log("profile getUserStoryMessages", profile)
+
+    return profile.storyLine
+  }
+
+  public static resetStory(id: string): void {
+    const profiles = this.instance.getCollection("profiles")
+    const profile = profiles.findOne({id: `profile_${id}`})
+    profile.storyLine = []
+
+    console.log("profile resetStory", profile)
+
+    profiles.update(profile)
+    this.instance.saveDatabase()
+  }
 }

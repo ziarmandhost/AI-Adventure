@@ -1,12 +1,8 @@
-const checkIfLoggedIn = () => {
-  if (!localStorage.getItem("token")) {
+window.addEventListener("load", async () => {
+  if (!localStorage.getItem("profile")) {
     localStorage.clear()
     window.API.send("change-screen", "menu")
   }
-}
-
-window.addEventListener("load", async () => {
-  checkIfLoggedIn()
 
   const buttons = Array.from(document.querySelectorAll("#wrapper>div:nth-child(2)>.answers>button")) as HTMLElement[]
   buttons.forEach(button => {
@@ -23,7 +19,7 @@ window.addEventListener("load", async () => {
     if (confirmAction) {
       cleanStoryButton.disabled = true
 
-      const res = await window.API.invoke("reset-story", localStorage.getItem("token"))
+      const res = await window.API.invoke("reset-story", localStorage.getItem("profile"))
 
       if (res?.code === 200) {
         alert("Story was cleared! Click \"Ok\" to generate new adventure...")
