@@ -45,7 +45,7 @@ export default class InMemoryDb {
 
   private static initialize() {
     if (!this.instance.getCollection("profiles")) {
-      this.instance.addCollection("profiles", {indices: "email"})
+      this.instance.addCollection("profiles", {indices: "email"}) //TODO: rethink indices
     }
 
     if (!this.instance.getCollection("app-settings")) {

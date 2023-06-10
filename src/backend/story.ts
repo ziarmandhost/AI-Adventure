@@ -42,7 +42,7 @@ export const startNewStory = async (profile: string): StoryResponse => {
     const promptResponseText = await AI.getCompletion(messages)
     const parsedPrompt = parsePromptResponse(promptResponseText)
     const result = await translate(parsedPrompt, language)
-    const image = await AI.generateImage(result.environment)
+    const image = await AI.generateImage(parsedPrompt.environment)
 
     messages.push({
       role: "assistant",
@@ -96,7 +96,7 @@ export const continueStory = async ({profile, answer}: { profile: string, answer
     const promptResponseText = await AI.getCompletion(mappedMessages)
     const parsedPrompt = parsePromptResponse(promptResponseText)
     const result = await translate(parsedPrompt, language)
-    const image = await AI.generateImage(result.environment)
+    const image = await AI.generateImage(parsedPrompt.environment)
 
     messages.push({
       role: "assistant",
